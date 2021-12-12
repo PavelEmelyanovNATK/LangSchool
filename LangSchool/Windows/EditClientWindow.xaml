@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LangSchool.Windows" xmlns:appdatabase="clr-namespace:LangSchool.AppDataBase"
+        xmlns:local="clr-namespace:LangSchool.Windows" xmlns:appdatabase="clr-namespace:LangSchool.AppDataBase" xmlns:controls="clr-namespace:LangSchool.controls"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         FontFamily="Comic Sans MS"
@@ -94,6 +94,23 @@
                 <TextBlock Text="Дата рождения: " HorizontalAlignment="Left"/>
                 <DatePicker Name="dpBirthday" Width="120" HorizontalAlignment="Right"/>
             </Grid>
+
+            <ListView x:Name="Tags">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <controls:TagControl 
+                            ClientId = "{Binding ClientID}"
+                            TagId="{Binding TagID}"
+                            Title="{Binding Title}"
+                            Color="{Binding Color}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,10">
                 <Button Name="btnAdd" Content="Созранить" Margin="10,0,10,0" Style="{StaticResource RoundedButton}"

@@ -94,18 +94,25 @@ namespace LangSchool
             Client selected = (Client)lvClients.SelectedItem;
             if (MessageBox.Show("Вы уверены, что хотите удалить данного клиента из системы?","Удаление клиента",MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                Client deltedClient = ConnectionDB.ObjectDB.Client.ToList().Find(x => x.ID == selected.ID);
-                var clTosr = ConnectionDB.ObjectDB.ClientService.ToList().FindAll(x => x.ClientID == deltedClient.ID);
-                if (clTosr.Count > 0)
+                
+                var clTosr = ConnectionDB.ObjectDB.ClientService.Where(x => x.ClientID == selected.ID);
+                if (clTosr.Count() > 0)
                 {
                     if (MessageBox.Show("В системе присутствует ифномация о посещениях данного клиента, вы хотите удалить эту информацию всместе с клиентом?", "Удаление клиента", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        ConnectionDB.ObjectDB.ClientService.RemoveRange(clTosr);
+                        ClientService deletedService;
+                        foreach (ClientService service in clTosr)
+                        {
+                            deletedService = ConnectionDB.ObjectDB.ClientService.Find(service.ID);
+                            ConnectionDB.ObjectDB.Entry(deletedService).State = System.Data.Entity.EntityState.Deleted;
+                        }
+                        ConnectionDB.ObjectDB.SaveChanges();
                     }
                     else
                         return;
                 }
-                ConnectionDB.ObjectDB.Client.Remove(deltedClient);
+                Client deletedClient = ConnectionDB.ObjectDB.Client.Find(selected.ID);
+                ConnectionDB.ObjectDB.Client.Remove(deletedClient);
                 ConnectionDB.ObjectDB.SaveChanges();
             }
             

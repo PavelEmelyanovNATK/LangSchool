@@ -42,10 +42,11 @@ namespace LangSchool.Models
 
         public static void SetElemtsPerPage(int count)
         {
-            if(count <= AllClients.Count)
-            ElementsPerPage = count;
-            if (ElementsPerPage < 1) CurrentPageNumber = 1;
+            if (count <= AllClients.Count && count > 0)
+                ElementsPerPage = count;
             else
+                ElementsPerPage = AllClients.Count;
+            
             if (CurrentPageNumber > PagesCount-1) CurrentPageNumber = PagesCount-1;
             recountPages();
         }

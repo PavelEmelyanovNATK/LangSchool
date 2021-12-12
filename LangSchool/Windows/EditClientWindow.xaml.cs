@@ -20,8 +20,24 @@ namespace LangSchool.Windows
     /// Логика взаимодействия для EditClientWindow.xaml
     /// </summary>
     /// 
+   
     public partial class EditClientWindow : Window
     {
+        class ClientToTag
+        {
+            int ClientID { get; set; }
+            int TagID { get; set; }
+            string Title { get; set; }
+            string Color { get; set; }
+            public ClientToTag(int clid, int tid, string title, string color)
+            {
+                ClientID = clid;
+                TagID = tid;
+                Title = title;
+                Color = color;
+            }
+        }
+
         int clientID;
 
         public EditClientWindow()
@@ -54,6 +70,14 @@ namespace LangSchool.Windows
             tbPhNumber.Text = curClient.Phone;
 
             dpBirthday.SelectedDate = curClient.Birthday;
+
+            List<ClientToTag> tags = new List<ClientToTag>();
+            foreach(var tag in curClient.Tag)
+            {
+                tags.Add(new ClientToTag(curClient.ID, tag.ID, tag.Title, tag.Color));
+            }
+
+            Tags.ItemsSource = tags;
         }
 
         private bool checkForEmptyFields()

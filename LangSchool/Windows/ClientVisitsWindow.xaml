@@ -75,7 +75,7 @@
                                             </Grid.ColumnDefinitions>
 
                                             <StackPanel Grid.Column="0" Margin="10">
-                                                <TextBlock Text="{Binding Service.Title}"/>
+                                                <TextBlock Text="{Binding Service.Title}" TextWrapping="Wrap"/>
                                                 <TextBlock Text="{Binding StartTime, StringFormat='dd.MM.yyyy hh:mm'}"/>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Всего файлов: "/>
